@@ -1,0 +1,9 @@
+.character {
+    border: 3px solid black;
+    width: 40%;
+}
+
+.characterDiv {
+    position: absolute;
+    padding: 0px 0px 0px 0px;
+}
