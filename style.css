@@ -1,6 +1,7 @@
 .character {
     border: 3px solid black;
-    width: 40%;
+    width: 50px;]
+    transform: position(-50%, -50%);
 }
 
 .characterDiv {
