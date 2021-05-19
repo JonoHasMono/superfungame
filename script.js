@@ -4,8 +4,9 @@ let j = 0;
 let k = 0;
 let positionX = x + "%";
 let laserPosition = 50;
-let positionY = 88;
+let positionY = 75;
 let enemyStart = 5;
+let enemyX = 10;
 
 const gameVar = document.createElement("div");
 gameVar.setAttribute("id", "game");
@@ -23,7 +24,7 @@ let character = document.createElement("div");
 character.setAttribute("id", "character");
 character.classList.add("characterDiv");
 character.style.left = positionX;
-character.style.top = "90%";
+character.style.top = "80%";
 
 let charVis = document.createElement("img");
 charVis.setAttribute("src", "images/cat.jpeg");
@@ -44,7 +45,7 @@ function createEnemy() {
     let enemy = document.createElement("div");
     enemy.setAttribute("id", "enemy");
     enemy.classList.add("enemy");
-    enemy.style.left = ((Math.floor(Math.random() * 80) + 10) + "%");
+    enemy.style.left = enemyX + "%";
     enemy.style.top = enemyStart + "%"
 
     let enemyVis = document.createElement("img");
@@ -53,14 +54,6 @@ function createEnemy() {
 
     enemies.appendChild(enemy);
     enemy.appendChild(enemyVis);
-}
-
-function checkOverlap() {
-    let overlap = !(enemy.right < laser.left || 
-        enemy.left > laser.right || 
-        enemy.bottom < laser.top || 
-        enemy.top > laser.bottom)
-    return(overlap);
 }
 
 document.addEventListener('keydown', logKey);
@@ -98,13 +91,13 @@ function laserEyes() {
     let laser = document.createElement("a");
     laser.setAttribute("id", "laser");
     laser.classList.add("laser");
-    positionY = 88;
+    positionY = 75;
     laserPosition = x;
     laser.style.left = laserPosition + 1 + "%";
     laser.style.top = positionY + "%"
     laserHolder.appendChild(laser);
     laserMove();
-    let y = 88
+    let y = 75
     function laserMove() {
         let l = 0
         setTimeout(() => {
