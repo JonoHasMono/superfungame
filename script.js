@@ -45,7 +45,7 @@ function startGame() {
     createCharacter();
     createEnemy();
     setScore();
-    showUpgrades();
+    shopButton();
 }
 
 function setScore() {
@@ -203,6 +203,10 @@ function isColliding() {
 
 window.setInterval(() => {
 }, 50);
+
+function openShop() {
+
+}
 
 function showUpgrades() {
     let upgradeOne = document.createElement("div");
