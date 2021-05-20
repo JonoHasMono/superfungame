@@ -45,6 +45,7 @@ function startGame() {
     createCharacter();
     createEnemy();
     setScore();
+    showUpgrades();
 }
 
 function setScore() {
@@ -202,5 +203,19 @@ function isColliding() {
 
 window.setInterval(() => {
 }, 50);
+
+function showUpgrades() {
+    let upgradeOne = document.createElement("div");
+    upgradeOne.setAttribute("id", "upOne");
+    upgradeOne.setAttribute("class", "upOne");
+    upgradeOne.innerHTML = "||"
+    gameVar.appendChild(upgradeOne)
+}
+
+
+
+
+
+
 
 startGame();
