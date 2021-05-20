@@ -13,7 +13,7 @@
     height: 100px;
     user-select: none;
     position: absolute;
-    animation: moveEnemy 4s ease Infinite;
+    animation: moveEnemy 40s ease Infinite;
 }
 
 .enemyVis {

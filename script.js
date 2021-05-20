@@ -7,6 +7,9 @@ let laserPosition = 50;
 let positionY = 75;
 let enemyStart = 5;
 let enemyX = 10;
+let enemyCurrentPos1 = 0;
+let enemyCurrentPos2 = 0;
+let shotOneDamage = 1;
 
 const gameVar = document.createElement("div");
 gameVar.setAttribute("id", "game");
@@ -54,6 +57,7 @@ function createEnemy() {
 
     enemies.appendChild(enemy);
     enemy.appendChild(enemyVis);
+    trackPosition();
 }
 
 document.addEventListener('keydown', logKey);
@@ -87,6 +91,18 @@ function lotsOfLasers() {
     }, 250)
 }
 
+function trackPosition() {
+    m = 0
+    setTimeout(() => {
+        m++
+        enemyCurrentPos1 = (enemy.getBoundingClientRect().left) - 50;
+        enemyCurrentPos2 = (enemy.getBoundingClientRect().right) + 50;
+        if(m < Infinity) {
+            trackPosition();
+        }
+    }, 10);
+}
+
 function laserEyes() {
     let laser = document.createElement("a");
     laser.setAttribute("id", "laser");
@@ -96,11 +112,21 @@ function laserEyes() {
     laser.style.left = laserPosition + 1 + "%";
     laser.style.top = positionY + "%"
     laserHolder.appendChild(laser);
+    let laserPos1 = laser.getBoundingClientRect().left;
+    let laserPos2 = laser.getBoundingClientRect().right;
     laserMove();
     let y = 75
     function laserMove() {
         let l = 0
         setTimeout(() => {
+            if(y < 12) {
+                if (laserPos1 >= enemyCurrentPos1) {
+                    if (laserPos2 <= enemyCurrentPos2) {
+                        laserHolder.removeChild(laser);
+                        successfulHit();
+                    }
+                }
+            }
             y = y - 4;
             laser.style.top = y + "%"
             l++
@@ -113,6 +139,10 @@ function laserEyes() {
         laser.classList.remove("laser");
         laserHolder.removeChild(laser);
     }, 400);
+}
+
+function successfulHit() {
+    
 }
 
 function moveLeft() {
