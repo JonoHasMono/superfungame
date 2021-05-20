@@ -5,11 +5,14 @@ let k = 0;
 let positionX = x + "%";
 let laserPosition = 50;
 let positionY = 75;
-let enemyStart = 5;
+let enemyStart = 10;
 let enemyX = 10;
 let enemyCurrentPos1 = 0;
 let enemyCurrentPos2 = 0;
-let shotOneDamage = 1;
+
+let points = 0;
+
+let shot1 = 1;
 
 const gameVar = document.createElement("div");
 gameVar.setAttribute("id", "game");
@@ -33,11 +36,20 @@ let charVis = document.createElement("img");
 charVis.setAttribute("src", "images/cat.jpeg");
 charVis.setAttribute("class", "character");
 
+let score = document.createElement("div");
+score.setAttribute("id", "score");
+score.setAttribute("class", "score");
+gameVar.appendChild(score);
+
 function startGame() {
     createCharacter();
     createEnemy();
+    setScore();
 }
 
+function setScore() {
+    document.getElementById("score").innerHTML = "Score: " + points;
+}
 
 function createCharacter() {
     gameVar.appendChild(character);
@@ -109,7 +121,7 @@ function laserEyes() {
     laser.classList.add("laser");
     positionY = 75;
     laserPosition = x;
-    laser.style.left = laserPosition + 1 + "%";
+    laser.style.left = laserPosition + "%";
     laser.style.top = positionY + "%"
     laserHolder.appendChild(laser);
     let laserPos1 = laser.getBoundingClientRect().left;
@@ -119,7 +131,7 @@ function laserEyes() {
     function laserMove() {
         let l = 0
         setTimeout(() => {
-            if(y < 12) {
+            if(y < 18) {
                 if (laserPos1 >= enemyCurrentPos1) {
                     if (laserPos2 <= enemyCurrentPos2) {
                         laserHolder.removeChild(laser);
@@ -127,7 +139,7 @@ function laserEyes() {
                     }
                 }
             }
-            y = y - 4;
+            y = y - 2;
             laser.style.top = y + "%"
             l++
             if (l < 50) {
@@ -142,7 +154,8 @@ function laserEyes() {
 }
 
 function successfulHit() {
-    
+    points = points + shot1;
+    document.getElementById("score").innerHTML = "Score: " + points;
 }
 
 function moveLeft() {
