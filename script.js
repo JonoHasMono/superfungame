@@ -4,6 +4,7 @@ let j = 0;
 let k = 0;
 let positionX = x + "%";
 let laserPosition = 50;
+let laserPosition2 = 50;
 let positionY = 75;
 let enemyStart = 10;
 let enemyX = 10;
@@ -149,6 +150,77 @@ function trackPosition() {
 
 function laserEyes() {
     if(shopOpen == false) {
+        if(u1Active == true) {
+            let laser = document.createElement("a");
+            laser.setAttribute("id", "laser");
+            laser.classList.add("laser");
+            positionY = 75;
+            laserPosition = x;
+            laser.style.left = laserPosition - 1 + "%";
+            laser.style.top = positionY + "%"
+            laserHolder.appendChild(laser);
+            let laserPos1 = laser.getBoundingClientRect().left;
+            let laserPos2 = laser.getBoundingClientRect().right;
+            laserMove();
+            let y = 75
+            function laserMove() {
+                let l = 0
+                setTimeout(() => {
+                    if(y < 18) {
+                        if (laserPos1 >= enemyCurrentPos1) {
+                            if (laserPos2 <= enemyCurrentPos2) {
+                                laserHolder.removeChild(laser);
+                                successfulHit();
+                            }
+                        }
+                    } 
+                    y = y - 2;
+                            laser.style.top = y + "%"
+                            l++
+                            if (l < 50) {
+                                laserMove();
+                        }
+                }, 10);
+            }
+            setTimeout(() => {
+                laser.classList.remove("laser");
+                laserHolder.removeChild(laser);
+            }, 400);
+
+            let laser2 = document.createElement("a");
+            laser2.setAttribute("id", "laser");
+            laser2.classList.add("laser");
+            positionY = 75;
+            laserPosition2 = x;
+            laser2.style.left = laserPosition2 + 1 + "%";
+            laser2.style.top = positionY + "%"
+            laserHolder.appendChild(laser2);
+            let laser2Pos1 = laser2.getBoundingClientRect().left;
+            let laser2Pos2 = laser2.getBoundingClientRect().right;
+            laserMove2();
+            setTimeout(() => {
+                laser2.classList.remove("laser");
+                laserHolder.removeChild(laser2);
+            }, 400);
+            function laserMove2() {
+                let l2 = 0
+                setTimeout(() => {
+                    if(y < 18) {
+                        if (laser2Pos1 >= enemyCurrentPos1) {
+                            if (laser2Pos2 <= enemyCurrentPos2) {
+                                laserHolder.removeChild(laser2);
+                                successfulHit();
+                            }
+                        }
+                    } 
+                            laser2.style.top = y + "%"
+                            l2++
+                            if (l2 < 50) {
+                                laserMove2();
+                        }
+                }, 10);
+            }
+        } else {
         let laser = document.createElement("a");
         laser.setAttribute("id", "laser");
         laser.classList.add("laser");
@@ -185,7 +257,8 @@ function laserEyes() {
             laserHolder.removeChild(laser);
         }, 400);
     }
-}
+    }
+        }
 
 function successfulHit() {
     points = points + shot1;
@@ -326,13 +399,17 @@ function hideUpgrades() {
 }
 
 function u1Activate() {
-    if (u1Count == 1) {
-        let p = 0
-        u1Chance = 0.05
-        if (Math.random() <= u1Chance) {
-            u1Ability();
+    setTimeout(() => {
+        if (u1Count == 1) {
+            let p = 0
+            u1Chance = 0.05
+            if (Math.random() <= u1Chance) {
+                u1Ability();
+                u1Activate()
+            }
         }
-    }
+        u1Activate()
+    }, 1000)
 }
 
 function u1Ability() {
