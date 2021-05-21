@@ -57,6 +57,7 @@ let upgradeOne = document.createElement("div");
             u1Price.innerHTML = u1Cost;
             document.getElementById("score").innerHTML = "Score: " + points;
             u1Count = u1Count + 1;
+            u1Chance = 0.05 * u1Count;
             u1Activate();
         }
     }
@@ -402,7 +403,6 @@ function u1Activate() {
     setTimeout(() => {
         if (u1Count >= 1) {
             let p = 0
-            u1Chance = 0.1 * u1Count;
             if (Math.random() <= u1Chance) {
                 u1Ability();
             } else {
