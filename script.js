@@ -405,10 +405,11 @@ function u1Activate() {
             u1Chance = 0.1 * u1Count;
             if (Math.random() <= u1Chance) {
                 u1Ability();
+            } else {
+                u1Activate()
             }
         
         }
-        u1Activate()
     }, 1000)
 }
 
@@ -416,6 +417,7 @@ function u1Ability() {
     u1Active = true
     setTimeout(() => {
         u1Active = false
+        u1Activate()
     }, 5000)
 }
 
