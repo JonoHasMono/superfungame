@@ -15,6 +15,8 @@ let points = 0;
 
 let shot1 = 1;
 
+let u1Cost = 25;
+
 const gameVar = document.createElement("div");
 gameVar.setAttribute("id", "game");
 document.body.appendChild(gameVar);
@@ -45,7 +47,32 @@ gameVar.appendChild(score);
 let upgradeOne = document.createElement("div");
     upgradeOne.setAttribute("id", "upOne");
     upgradeOne.setAttribute("class", "upOne");
-    upgradeOne.innerHTML = "||"
+    upgradeOne.innerHTML = "^^"
+    upgradeOne.onclick = function useUpgradeOne() {
+        if(points >= u1Cost) {
+            points = points - u1Cost;
+            u1Desc.innerHTML = "Reduces cooldown";
+            u1Cost = Math.floor(u1Cost ** 1.25);
+            u1Price.innerHTML = u1Cost;
+            document.getElementById("score").innerHTML = "Score: " + points;
+            u1Count = u1Count + 1;
+            u1Activate();
+        }
+    }
+
+let u1Count = 0;
+let u1Chance = 0;
+let u1Active = false
+
+
+let u1Price = document.createElement("div");
+u1Price.setAttribute("id", "u1Price");
+u1Price.setAttribute("class", "u1Price");
+u1Price.innerHTML = u1Cost;
+
+let u1Desc = document.createElement("div");
+u1Desc.setAttribute("id", "u1Desc");
+u1Desc.setAttribute("class", "u1Desc");
 
 function startGame() {
     createCharacter();
@@ -275,27 +302,45 @@ function shopButton() {
     openShop.setAttribute("class", "openShop");
     openShop.onclick = function shop() {
         gameVar.appendChild(shopMenu);
+        u1Desc.innerHTML = "Double Shot"
         gameVar.appendChild(shopMenuBG);
         gameVar.appendChild(closeShop);
         showUpgrades();
         shopOpen = true;
     }
-    openShop.innerHTML = "Open Shop"
-    gameVar.appendChild(openShop)
+    openShop.innerHTML = "Open Shop";
+    gameVar.appendChild(openShop);
 }
 
 
 function showUpgrades() {
-    gameVar.appendChild(upgradeOne)
+    gameVar.appendChild(upgradeOne);
+    gameVar.appendChild(u1Price);
+    gameVar.appendChild(u1Desc);
 }
 
 function hideUpgrades() {
-    gameVar.removeChild(upgradeOne)
+    gameVar.removeChild(upgradeOne);
+    gameVar.removeChild(u1Price);
+    gameVar.removeChild(u1Desc);
 }
 
+function u1Activate() {
+    if (u1Count == 1) {
+        let p = 0
+        u1Chance = 0.05
+        if (Math.random() <= u1Chance) {
+            u1Ability();
+        }
+    }
+}
 
-
-
+function u1Ability() {
+    u1Active = true
+    setTimeout(() => {
+        u1Active = false
+    }, 5000)
+}
 
 
 startGame();
