@@ -42,6 +42,11 @@ score.setAttribute("id", "score");
 score.setAttribute("class", "score");
 gameVar.appendChild(score);
 
+let upgradeOne = document.createElement("div");
+    upgradeOne.setAttribute("id", "upOne");
+    upgradeOne.setAttribute("class", "upOne");
+    upgradeOne.innerHTML = "||"
+
 function startGame() {
     createCharacter();
     createEnemy();
@@ -87,8 +92,6 @@ function logKey(e) {
         moveLeft();
       } else if (key == ' KeyD') {
         moveRight();
-      } else if (key == ' KeyL') {
-        laserEyes();
       } else if (key == ' KeyO') {
         createEnemy();
       } else if (key == ' KeyY') {
@@ -159,6 +162,33 @@ function laserEyes() {
 
 function successfulHit() {
     points = points + shot1;
+    function showDamage() {
+        damageY = 5;
+        let damage = document.createElement("div");
+        damage.setAttribute("id", "damage");
+        damage.setAttribute("class", "damage");
+        damage.style.top = damageY + "%";
+        damage.style.opacity = 1;
+        damage.innerHTML = "-" + shot1;
+        damage.style.left = ((enemyCurrentPos1 + 50) + (Math.floor(Math.random() * 100))) + "px";
+        damage.style.top = (damageY + (Math.floor(Math.random() * 7))) + "%"
+        gameVar.appendChild(damage);
+        function damageFade() {
+            setTimeout(() => {
+                if(damage.style.opacity > 0) {
+                    damage.style.opacity = damage.style.opacity - 0.01
+                    damageFade();
+                }
+            }, 10)
+        }
+        setTimeout(() => {
+            damageFade();
+        }, 250)
+        setTimeout(() => {
+            gameVar.removeChild(damage);
+        }, 1000)
+    }
+    showDamage();
     document.getElementById("score").innerHTML = "Score: " + points;
 }
 
@@ -232,6 +262,7 @@ closeShop.onclick = function closeShop() {
     gameVar.removeChild(shopMenuBG);
     shopOpen = false;
     removeCloseShop();
+    hideUpgrades();
 }
 
 function removeCloseShop() {
@@ -246,6 +277,7 @@ function shopButton() {
         gameVar.appendChild(shopMenu);
         gameVar.appendChild(shopMenuBG);
         gameVar.appendChild(closeShop);
+        showUpgrades();
         shopOpen = true;
     }
     openShop.innerHTML = "Open Shop"
@@ -254,13 +286,12 @@ function shopButton() {
 
 
 function showUpgrades() {
-    let upgradeOne = document.createElement("div");
-    upgradeOne.setAttribute("id", "upOne");
-    upgradeOne.setAttribute("class", "upOne");
-    upgradeOne.innerHTML = "||"
     gameVar.appendChild(upgradeOne)
 }
 
+function hideUpgrades() {
+    gameVar.removeChild(upgradeOne)
+}
 
 
 
