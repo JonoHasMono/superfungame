@@ -400,13 +400,13 @@ function hideUpgrades() {
 
 function u1Activate() {
     setTimeout(() => {
-        if (u1Count == 1) {
+        if (u1Count >= 1) {
             let p = 0
-            u1Chance = 0.05
+            u1Chance = 0.1 * u1Count;
             if (Math.random() <= u1Chance) {
                 u1Ability();
-                u1Activate()
             }
+        
         }
         u1Activate()
     }, 1000)
