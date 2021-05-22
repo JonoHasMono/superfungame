@@ -52,13 +52,17 @@ let upgradeOne = document.createElement("div");
     upgradeOne.onclick = function useUpgradeOne() {
         if(points >= u1Cost) {
             points = points - u1Cost;
-            u1Desc.innerHTML = "Reduces cooldown";
-            u1Cost = Math.floor(u1Cost ** 1.25);
-            u1Price.innerHTML = u1Cost;
-            document.getElementById("score").innerHTML = "Score: " + points;
+            u1Cost = 25 + (Math.floor(u1Cost * 3));
+            u1Price.innerHTML = commas(u1Cost);
+            document.getElementById("score").innerHTML = "Score: " + commas(points);
+            commas(score);
             u1Count = u1Count + 1;
-            u1Chance = 0.05 * u1Count;
+            u1Chance = 0.1 * u1Count;
             u1Activate();
+            if(u1Count == 10) {
+                u1Cost = Infinity;
+                document.getElementById("u1Price").innerHTML = "MAX"
+            }
         }
     }
 
@@ -84,7 +88,11 @@ function startGame() {
 }
 
 function setScore() {
-    document.getElementById("score").innerHTML = "Score: " + points;
+    document.getElementById("score").innerHTML = "Score: " + commas(points);
+}
+
+function commas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function createCharacter() {
@@ -290,7 +298,7 @@ function successfulHit() {
         }, 1000)
     }
     showDamage();
-    document.getElementById("score").innerHTML = "Score: " + points;
+    document.getElementById("score").innerHTML = "Score: " + commas(points);
 }
 
 function moveLeft() {
