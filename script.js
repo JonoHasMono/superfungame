@@ -516,7 +516,7 @@ function u1Ability() {
 }
 
 function u2Ability() {
-    firerate = 75
+    firerate = 10
     powerupUsed(powerup2);
     setTimeout(() => {
         firerate = 150
