@@ -39,6 +39,7 @@ character.style.top = "80%";
 let charVis = document.createElement("img");
 charVis.setAttribute("src", "images/cat.jpeg");
 charVis.setAttribute("class", "character");
+charVis.setAttribute("draggable", "false");
 
 let score = document.createElement("div");
 score.setAttribute("id", "score");
@@ -164,8 +165,7 @@ function laserEyes() {
             laser.setAttribute("id", "laser");
             laser.classList.add("laser");
             positionY = 75;
-            laserPosition = x;
-            laser.style.left = laserPosition - 1 + "%";
+            laser.style.left = laserPosition - 15 + "px";
             laser.style.top = positionY + "%"
             laserHolder.appendChild(laser);
             let laserPos1 = laser.getBoundingClientRect().left;
@@ -201,7 +201,7 @@ function laserEyes() {
             laser2.classList.add("laser");
             positionY = 75;
             laserPosition2 = x;
-            laser2.style.left = laserPosition2 + 1 + "%";
+            laser2.style.left = laserPosition2 + 15 + "px";
             laser2.style.top = positionY + "%"
             laserHolder.appendChild(laser2);
             let laser2Pos1 = laser2.getBoundingClientRect().left;
@@ -234,8 +234,7 @@ function laserEyes() {
         laser.setAttribute("id", "laser");
         laser.classList.add("laser");
         positionY = 75;
-        laserPosition = x;
-        laser.style.left = laserPosition + "%";
+        laser.style.left = x + "px";
         laser.style.top = positionY + "%"
         laserHolder.appendChild(laser);
         let laserPos1 = laser.getBoundingClientRect().left;
@@ -346,6 +345,9 @@ function moveRight() {
 addEventListener("mousemove", function(e) {
     let mouseX = e.clientX
     character.style.left = mouseX + "px"
+    x = mouseX;
+    laserPosition = mouseX;
+    positionX = mouseX;
 })
 
 
