@@ -11,12 +11,20 @@ let enemyX = 10;
 let enemyCurrentPos1 = 0;
 let enemyCurrentPos2 = 0;
 let shopOpen = false;
+let mouseIsDown = false;
+let firerate = 150;
 
 let points = 0;
 
 let shot1 = 1;
 
 let u1Cost = 25;
+
+let u2Cost = 35;
+
+let powerup1 = "Double Shot";
+let powerup2 = "Rapidfire";
+
 
 const gameVar = document.createElement("div");
 gameVar.setAttribute("id", "game");
@@ -58,7 +66,7 @@ let upgradeOne = document.createElement("div");
             document.getElementById("score").innerHTML = "Score: " + commas(points);
             commas(score);
             u1Count = u1Count + 1;
-            u1Chance = 0.1 * u1Count;
+            u1Chance = 0.05 * u1Count;
             u1Activate();
             if(u1Count == 10) {
                 u1Cost = Infinity;
@@ -67,9 +75,34 @@ let upgradeOne = document.createElement("div");
         }
     }
 
+let upgradeTwo = document.createElement("div");
+    upgradeTwo.setAttribute("id", "upTwo");
+    upgradeTwo.setAttribute("class", "upTwo");
+    upgradeTwo.innerHTML = "---"
+    upgradeTwo.onclick = function useUpgradeTwo() {
+        if(points >= u2Cost) {
+            points = points - u2Cost;
+            u2Cost = 35 + (Math.floor(u2Cost * 3));
+            u2Price.innerHTML = commas(u2Cost);
+            document.getElementById("score").innerHTML = "Score: " + commas(points);
+            commas(score);
+            u2Count = u2Count + 1;
+            u2Chance = 0.05 * u2Count;
+            u2Activate();
+            if(u2Count == 10) {
+                u2Cost = Infinity;
+                document.getElementById("u2Price").innerHTML = "MAX"
+            }
+        }
+    }
+
 let u1Count = 0;
 let u1Chance = 0;
 let u1Active = false
+
+let u2Count = 0;
+let u2Chance = 0;
+let u2Active = false
 
 
 let u1Price = document.createElement("div");
@@ -77,9 +110,19 @@ u1Price.setAttribute("id", "u1Price");
 u1Price.setAttribute("class", "u1Price");
 u1Price.innerHTML = u1Cost;
 
+let u2Price = document.createElement("div");
+u2Price.setAttribute("id", "u2Price");
+u2Price.setAttribute("class", "u2Price");
+u2Price.innerHTML = u2Cost;
+
 let u1Desc = document.createElement("div");
 u1Desc.setAttribute("id", "u1Desc");
 u1Desc.setAttribute("class", "u1Desc");
+
+let u2Desc = document.createElement("div");
+u2Desc.setAttribute("id", "u2Desc");
+u2Desc.setAttribute("class", "u2Desc");
+
 
 function startGame() {
     createCharacter();
@@ -149,7 +192,32 @@ function createEnemy() {
 
 document.addEventListener('keydown', logKey);
 
-document.addEventListener('click', laserEyes)
+document.addEventListener('mousedown', shootLasers)
+document.addEventListener('mouseup', stopLasers)
+
+function shootLasers() {
+    if (mouseIsDown == false) {
+        mouseIsDown = true;
+        laserLoop();
+        laserEyes();
+    }
+
+}
+
+function stopLasers() {
+    if (mouseIsDown == true) {
+        mouseIsDown = false;
+    }
+}
+
+function laserLoop() {
+    setTimeout(() => {
+        if(mouseIsDown == true) {
+            laserEyes();
+            laserLoop();
+        }
+    }, firerate)
+}
 
 function logKey(e) {
     let key = ` ${e.code}`
@@ -224,7 +292,7 @@ function laserEyes() {
             setTimeout(() => {
                 laser.classList.remove("laser");
                 laserHolder.removeChild(laser);
-            }, 400);
+            }, 500);
 
             let laser2 = document.createElement("a");
             laser2.setAttribute("id", "laser");
@@ -240,7 +308,7 @@ function laserEyes() {
             setTimeout(() => {
                 laser2.classList.remove("laser");
                 laserHolder.removeChild(laser2);
-            }, 400);
+            }, 500);
             function laserMove2() {
                 let l2 = 0
                 setTimeout(() => {
@@ -293,7 +361,7 @@ function laserEyes() {
         setTimeout(() => {
             laser.classList.remove("laser");
             laserHolder.removeChild(laser);
-        }, 400);
+        }, 500);
     }
     }
         }
@@ -328,48 +396,6 @@ function successfulHit() {
     }
     showDamage();
     document.getElementById("score").innerHTML = "Score: " + commas(points);
-}
-
-function moveLeft() {
-    if(shopOpen == false) {
-        if(x < 5) {
-            positionX = "10%"
-            character.style.left = positionX
-        } else if(positionX == "10%") {
-            i = 50;
-        } else {
-            setTimeout(() => { 
-                x = x - 0.5
-                positionX = x + "%";
-                character.style.left = positionX;
-                i++
-                if (i < 10) {
-                    moveLeft();
-                }
-            }, 10);
-        }
-    }
-}
-
-function moveRight() {
-    if(shopOpen == false) {
-        if(x > 95) {
-            positionX = "90%"
-            character.style.left = positionX
-        } else if(positionX == "90%") {
-            i = 50;
-        } else {
-            setTimeout(() => { 
-                x = x + 0.5
-                positionX = x + "%";
-                character.style.left = positionX;
-                j++
-                if (j < 10) {
-                    moveRight();
-                }
-            }, 10);
-        }
-    }
 }
 
 addEventListener("mousemove", function(e) {
@@ -423,6 +449,7 @@ function shopButton() {
     openShop.onclick = function shop() {
         gameVar.appendChild(shopMenu);
         u1Desc.innerHTML = "Double Shot"
+        u2Desc.innerHTML = "Rapidfire"
         gameVar.appendChild(shopMenuBG);
         gameVar.appendChild(closeShop);
         showUpgrades();
@@ -437,12 +464,18 @@ function showUpgrades() {
     gameVar.appendChild(upgradeOne);
     gameVar.appendChild(u1Price);
     gameVar.appendChild(u1Desc);
+    gameVar.appendChild(upgradeTwo);
+    gameVar.appendChild(u2Price);
+    gameVar.appendChild(u2Desc);
 }
 
 function hideUpgrades() {
     gameVar.removeChild(upgradeOne);
     gameVar.removeChild(u1Price);
     gameVar.removeChild(u1Desc);
+    gameVar.removeChild(upgradeTwo);
+    gameVar.removeChild(u2Price);
+    gameVar.removeChild(u2Desc);
 }
 
 function u1Activate() {
@@ -459,13 +492,64 @@ function u1Activate() {
     }, 1000)
 }
 
+function u2Activate() {
+    setTimeout(() => {
+        if (u2Count >= 1) {
+            let p = 0
+            if (Math.random() <= u2Chance) {
+                u2Ability();
+            } else {
+                u2Activate()
+            }
+        
+        }
+    }, 1000)
+}
+
 function u1Ability() {
     u1Active = true
+    powerupUsed(powerup1);
     setTimeout(() => {
         u1Active = false
         u1Activate()
     }, 5000)
 }
 
+function u2Ability() {
+    firerate = 75
+    powerupUsed(powerup2);
+    setTimeout(() => {
+        firerate = 150
+        u2Activate()
+    }, 5000)
+}
+
+function powerupUsed(pow) {
+    function showPowerup() {
+        let powerup = document.createElement("div");
+        powerup.setAttribute("id", "powerup");
+        powerup.setAttribute("class", "powerup");
+        powerup.style.top = "80%";
+        powerup.style.opacity = 1;
+        powerup.innerHTML = pow
+        powerup.style.left = x + "px";
+        gameVar.appendChild(powerup);
+        function powerupFade() {
+            setTimeout(() => {
+                if(powerup.style.opacity > 0) {
+                    powerup.style.opacity = powerup.style.opacity - 0.025
+                    powerupFade();
+                }
+            }, 10)
+        }
+        setTimeout(() => {
+            powerupFade();
+        }, 250)
+        setTimeout(() => {
+            gameVar.removeChild(powerup);
+        }, 1000)
+    }
+    showPowerup();
+}
 
 startGame();

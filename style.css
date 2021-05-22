@@ -1,6 +1,13 @@
 .bg {
-    background-color: rgb(5, 0, 15);
     overflow: hidden;
+    animation: bganim 3s infinite;
+}
+
+@keyframes bganim {
+    0% {background-color: #0c0003}
+    33% {background-color: #000c06}
+    66% {background-color: #02000c}
+    100% {background-color: #0c0003}
 }
 
 .star {
@@ -47,10 +54,10 @@
 
 .laser {    
     position: absolute;
-    padding: 50px 5px 20px 5px;
+    padding: 25px 4px 25px 4px;
     background-color: white;
     user-select: none;
-    border: 4px solid rgb(0, 255, 150);
+    border: 3px solid rgb(0, 255, 150);
     box-shadow: 0px 0px 50px rgb(0, 255, 150), 0px 0px 25px rgb(0, 255, 150);
     transform: translate(-50%, -50%);
 }
@@ -173,6 +180,20 @@
     font-size: 400%;
 }
 
+.powerup {
+    position: absolute;
+    text-align: center;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans';
+    font-size: 250%;
+    color: #00ff88;
+    -webkit-text-stroke: 1px #00ff88;
+    text-shadow: 0px 0px 25px #00ff88;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    z-index: 3;
+    user-select: none;
+}
+
 .upOne {
     transform: translate(-50%, -50%);
     position: absolute;
@@ -216,6 +237,59 @@
     transform: translate(-50%, -50%);
     position: absolute;
     top: 12%;
+    left: 17%;
+    font-size: 25px;
+    color: white;
+    user-select: none;
+    font-weight: 600;
+    -webkit-text-stroke: 1px black;
+    z-index: 6;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans';
+}
+
+.upTwo {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    padding: 5px 10px 10px 10px;
+    top: 40%;
+    left: 15%;
+    font-size: 60px;
+    color: white;
+    user-select: none;
+    font-weight: 600;
+    -webkit-text-stroke: 2px rgb(0, 255, 150);
+    background-color: black;
+    border: 4px solid rgb(0, 255, 150);
+    z-index: 6;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans';
+}
+
+.upTwo:hover {
+    cursor: pointer;
+    font-size: 80px;
+    padding: 18px 13px 2px 13px;
+}
+
+.u2Price {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    padding: 0px;
+    top: 40%;
+    left: 23%;
+    font-size: 45px;
+    color: white;
+    user-select: none;
+    font-weight: 300;
+    -webkit-text-stroke: 2px rgb(0, 255, 150);
+    z-index: 6;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans';
+}
+
+
+.u2Desc {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 32%;
     left: 17%;
     font-size: 25px;
     color: white;
