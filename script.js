@@ -343,6 +343,12 @@ function moveRight() {
     }
 }
 
+addEventListener("mousemove", function(e) {
+    let mouseX = e.clientX
+    character.style.left = mouseX + "px"
+})
+
+
 function isColliding() {
     alert(checkOverlap());
 }
