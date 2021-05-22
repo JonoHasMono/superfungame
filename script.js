@@ -17,13 +17,17 @@ let firerate = 150;
 let points = 0;
 
 let shot1 = 1;
+let shot2 = 3;
 
 let u1Cost = 25;
 
 let u2Cost = 35;
 
+let u3Cost = 80;
+
 let powerup1 = "Double Shot";
 let powerup2 = "Rapidfire";
+let powerup3 = "Wide Shot";
 
 
 const gameVar = document.createElement("div");
@@ -96,6 +100,28 @@ let upgradeTwo = document.createElement("div");
         }
     }
 
+ let upgradeThree = document.createElement("div");
+    upgradeThree.setAttribute("id", "upThree");
+    upgradeThree.setAttribute("class", "upThree");
+    upgradeThree.innerHTML = "/  \\"
+    upgradeThree.onclick = function useUpgradeThree() {
+        if(points >= u3Cost) {
+            points = points - u3Cost;
+            u3Cost = 35 + (Math.floor(u3Cost * 3));
+            u3Price.innerHTML = commas(u3Cost);
+            document.getElementById("score").innerHTML = "Score: " + commas(points);
+            commas(score);
+            u3Count = u3Count + 1;
+            u3Chance = 0.05 * u3Count;
+            u3Activate();
+            if(u3Count == 10) {
+                u3Cost = Infinity;
+                document.getElementById("u3Price").innerHTML = "MAX"
+            }
+        }
+    }
+
+
 let u1Count = 0;
 let u1Chance = 0;
 let u1Active = false
@@ -103,6 +129,10 @@ let u1Active = false
 let u2Count = 0;
 let u2Chance = 0;
 let u2Active = false
+
+let u3Count = 0;
+let u3Chance = 0;
+let u3Active = false
 
 
 let u1Price = document.createElement("div");
@@ -115,6 +145,12 @@ u2Price.setAttribute("id", "u2Price");
 u2Price.setAttribute("class", "u2Price");
 u2Price.innerHTML = u2Cost;
 
+
+let u3Price = document.createElement("div");
+u3Price.setAttribute("id", "u3Price");
+u3Price.setAttribute("class", "u3Price");
+u3Price.innerHTML = u3Cost;
+
 let u1Desc = document.createElement("div");
 u1Desc.setAttribute("id", "u1Desc");
 u1Desc.setAttribute("class", "u1Desc");
@@ -122,6 +158,10 @@ u1Desc.setAttribute("class", "u1Desc");
 let u2Desc = document.createElement("div");
 u2Desc.setAttribute("id", "u2Desc");
 u2Desc.setAttribute("class", "u2Desc");
+
+let u3Desc = document.createElement("div");
+u3Desc.setAttribute("id", "u3Desc");
+u3Desc.setAttribute("class", "u3Desc");
 
 
 function startGame() {
@@ -258,6 +298,42 @@ function trackPosition() {
 
 function laserEyes() {
     if(shopOpen == false) {
+        if(u3Active == true) {
+            let laserWide = document.createElement("a");
+            laserWide.setAttribute("id", "laserWide");
+            laserWide.classList.add("laserWide");
+            positionY = 75;
+            laserWide.style.left = laserPosition + "px";
+            laserWide.style.top = positionY + "%";
+            laserHolder.appendChild(laserWide);
+            let laserWidePos1 = laserWide.getBoundingClientRect().left;
+            let laserWidePos2 = laserWide.getBoundingClientRect().right;
+            laserWideMove();
+            let y = 75
+            function laserWideMove() {
+                let l = 0
+                setTimeout(() => {
+                    if(y < 18) {
+                        if (laserWidePos1 >= enemyCurrentPos1) {
+                            if (laserWidePos2 <= enemyCurrentPos2) {
+                                laserHolder.removeChild(laserWide);
+                                successfulHitWide();
+                            }
+                        }
+                    } 
+                    y = y - 2;
+                            laserWide.style.top = y + "%"
+                            l++
+                            if (l < 50) {
+                                laserWideMove();
+                        }
+                }, 10);
+            }
+            setTimeout(() => {
+                laserWide.classList.remove("laserWide");
+                laserHolder.removeChild(laserWide);
+            }, 500);
+        }
         if(u1Active == true) {
             let laser = document.createElement("a");
             laser.setAttribute("id", "laser");
@@ -398,6 +474,38 @@ function successfulHit() {
     document.getElementById("score").innerHTML = "Score: " + commas(points);
 }
 
+function successfulHitWide() {
+    points = points + shot2;
+    function showDamage() {
+        damageY = 5;
+        let damage = document.createElement("div");
+        damage.setAttribute("id", "damage");
+        damage.setAttribute("class", "damage");
+        damage.style.top = damageY + "%";
+        damage.style.opacity = 1;
+        damage.innerHTML = "-" + shot2;
+        damage.style.left = ((enemyCurrentPos1 + 50) + (Math.floor(Math.random() * 100))) + "px";
+        damage.style.top = (damageY + (Math.floor(Math.random() * 7))) + "%"
+        gameVar.appendChild(damage);
+        function damageFade() {
+            setTimeout(() => {
+                if(damage.style.opacity > 0) {
+                    damage.style.opacity = damage.style.opacity - 0.01
+                    damageFade();
+                }
+            }, 10)
+        }
+        setTimeout(() => {
+            damageFade();
+        }, 250)
+        setTimeout(() => {
+            gameVar.removeChild(damage);
+        }, 1000)
+    }
+    showDamage();
+    document.getElementById("score").innerHTML = "Score: " + commas(points);
+}
+
 addEventListener("mousemove", function(e) {
     let mouseX = e.clientX
     character.style.left = mouseX + "px"
@@ -450,6 +558,7 @@ function shopButton() {
         gameVar.appendChild(shopMenu);
         u1Desc.innerHTML = "Double Shot"
         u2Desc.innerHTML = "Rapidfire"
+        u3Desc.innerHTML = "Wide Shot"
         gameVar.appendChild(shopMenuBG);
         gameVar.appendChild(closeShop);
         showUpgrades();
@@ -467,6 +576,9 @@ function showUpgrades() {
     gameVar.appendChild(upgradeTwo);
     gameVar.appendChild(u2Price);
     gameVar.appendChild(u2Desc);
+    gameVar.appendChild(upgradeThree);
+    gameVar.appendChild(u3Price);
+    gameVar.appendChild(u3Desc);
 }
 
 function hideUpgrades() {
@@ -476,6 +588,9 @@ function hideUpgrades() {
     gameVar.removeChild(upgradeTwo);
     gameVar.removeChild(u2Price);
     gameVar.removeChild(u2Desc);
+    gameVar.removeChild(upgradeThree);
+    gameVar.removeChild(u3Price);
+    gameVar.removeChild(u3Desc);
 }
 
 function u1Activate() {
@@ -506,6 +621,20 @@ function u2Activate() {
     }, 1000)
 }
 
+function u3Activate() {
+    setTimeout(() => {
+        if (u3Count >= 1) {
+            let p = 0
+            if (Math.random() <= u3Chance) {
+                u3Ability();
+            } else {
+                u3Activate()
+            }
+        
+        }
+    }, 1000)
+}
+
 function u1Ability() {
     u1Active = true
     powerupUsed(powerup1);
@@ -521,6 +650,15 @@ function u2Ability() {
     setTimeout(() => {
         firerate = 150
         u2Activate()
+    }, 5000)
+}
+
+function u3Ability() {
+    u3Active = true
+    powerupUsed(powerup3);
+    setTimeout(() => {
+        u3Active = true
+        u3Activate()
     }, 5000)
 }
 
