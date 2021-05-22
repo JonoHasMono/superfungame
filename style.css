@@ -8,7 +8,8 @@
     background-color: rgb(255, 255, 255);
     padding: 4px;
     padding-top: 25px;
-    border: 2px solid rgb(240, 255, 103)
+    border: 2px solid rgb(240, 255, 103);
+    z-index: -1;
 }
 
 .character {
