@@ -264,7 +264,7 @@ function laserEyes() {
             laser.classList.add("laser");
             positionY = 75;
             laser.style.left = laserPosition - 15 + "px";
-            laser.style.top = positionY + "%"
+            laser.style.top = positionY + "%";
             laserHolder.appendChild(laser);
             let laserPos1 = laser.getBoundingClientRect().left;
             let laserPos2 = laser.getBoundingClientRect().right;
@@ -516,7 +516,7 @@ function u1Ability() {
 }
 
 function u2Ability() {
-    firerate = 10
+    firerate = 75
     powerupUsed(powerup2);
     setTimeout(() => {
         firerate = 150
