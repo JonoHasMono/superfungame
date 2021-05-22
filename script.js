@@ -86,7 +86,37 @@ function startGame() {
     createEnemy();
     setScore();
     shopButton();
+    starLoop();
 }
+
+function starLoop() {
+    let star = document.createElement("a");
+    let starY = -10
+    star.setAttribute("id", "star");
+    star.setAttribute("class", "star");
+    setTimeout(() => {
+    star.style.left = (Math.random() * 2000) + 5 + "px";
+    star.style.top = starY + "%";
+    let starSpeed = 1;
+    starMove();
+    function starMove() {
+        setTimeout(() => {
+            starY = starY + (1 * starSpeed);
+            starSpeed = starSpeed + 0.25;
+            star.style.top = starY + "%"
+            star.style.paddingTop = 5 * (starSpeed * 3) + "px";
+            if (starY <= 100) {
+                starMove();
+            } else {
+                gameVar.removeChild(star);
+            }
+        }, 10);
+    }
+    gameVar.appendChild(star);
+    starLoop();
+    }, 25)
+}
+
 
 function setScore() {
     document.getElementById("score").innerHTML = "Score: " + commas(points);

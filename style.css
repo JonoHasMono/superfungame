@@ -1,6 +1,14 @@
 .bg {
-    background-color: rgb(20, 15, 30);
+    background-color: rgb(5, 0, 15);
     overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    padding: 4px;
+    padding-top: 25px;
+    border: 2px solid rgb(240, 255, 103)
 }
 
 .character {
@@ -10,6 +18,7 @@
     user-select: none;
     position: absolute;
     box-shadow: 0px 0px 20px white;
+    z-index: 1;
 }
 
 .enemy {
