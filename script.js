@@ -7,12 +7,12 @@ let laserPosition = 50;
 let laserPosition2 = 50;
 let positionY = 75;
 let enemyStart = 10;
-let enemyX = 10;
 let enemyCurrentPos1 = 0;
 let enemyCurrentPos2 = 0;
 let shopOpen = false;
 let mouseIsDown = false;
 let firerate = 150;
+let enemyX = 0;
 
 let points = 0;
 
@@ -214,12 +214,21 @@ function createCharacter() {
     character.appendChild(charVis);
 }
 
+function enemyLoop() {
+
+    setTimeout(() => {
+        enemyX = (25 + (Math.floor(Math.random() * 2000)))
+        createEnemy();
+    }, 1000)
+}
+
 function createEnemy() {
     let enemy = document.createElement("div");
     enemy.setAttribute("id", "enemy");
     enemy.classList.add("enemy");
-    enemy.style.left = enemyX + "%";
-    enemy.style.top = enemyStart + "%"
+    enemy.style.left = enemyX + "px";
+    let enemyStart = 0;
+    enemy.style.top = 10 + "%"
 
     let enemyVis = document.createElement("img");
     enemyVis.setAttribute("src", "images/enemy.jpg");
@@ -229,8 +238,6 @@ function createEnemy() {
     enemy.appendChild(enemyVis);
     trackPosition();
 }
-
-document.addEventListener('keydown', logKey);
 
 document.addEventListener('mousedown', shootLasers)
 document.addEventListener('mouseup', stopLasers)
@@ -257,31 +264,6 @@ function laserLoop() {
             laserLoop();
         }
     }, firerate)
-}
-
-function logKey(e) {
-    let key = ` ${e.code}`
-    key = key.toString();
-    i = 0;
-    j = 0;
-    if (key == ' KeyA') {
-        moveLeft();
-      } else if (key == ' KeyD') {
-        moveRight();
-      } else if (key == ' KeyO') {
-        createEnemy();
-      } else if (key == ' KeyY') {
-      }
-}
-
-function lotsOfLasers() {
-    setTimeout(() => {
-        laserEyes();
-        k++
-        if(k < 4) {
-            lotsOfLasers();
-        }
-    }, 250)
 }
 
 function trackPosition() {
@@ -321,7 +303,7 @@ function laserEyes() {
                             }
                         }
                     } 
-                    y = y - 2;
+                    y = y - 4;
                             laserWide.style.top = y + "%"
                             l++
                             if (l < 50) {
