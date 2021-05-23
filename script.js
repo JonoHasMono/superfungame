@@ -427,15 +427,14 @@ function laserEyes() {
 function successfulHit() {
     points = points + shot1;
     function showDamage() {
-        damageY = 5;
+        damageY = (enemy.getBoundingClientRect().top);
         let damage = document.createElement("div");
         damage.setAttribute("id", "damage");
         damage.setAttribute("class", "damage");
-        damage.style.top = damageY + "%";
         damage.style.opacity = 1;
         damage.innerHTML = "-" + shot1;
         damage.style.left = ((enemyCurrentPos1 + 50) + (Math.floor(Math.random() * 100))) + "px";
-        damage.style.top = (damageY + (Math.floor(Math.random() * 7))) + "%"
+        damage.style.top = (damageY + (Math.floor(Math.random() * 100))) + "px"
         gameVar.appendChild(damage);
         function damageFade() {
             setTimeout(() => {
@@ -459,7 +458,7 @@ function successfulHit() {
 function successfulHitWide() {
     points = points + shot2;
     function showDamage() {
-        damageY = 5;
+        damageY = enemy;
         let damage = document.createElement("div");
         damage.setAttribute("id", "damage");
         damage.setAttribute("class", "damage");
@@ -639,7 +638,7 @@ function u3Ability() {
     u3Active = true
     powerupUsed(powerup3);
     setTimeout(() => {
-        u3Active = true
+        u3Active = false
         u3Activate()
     }, 5000)
 }

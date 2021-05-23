@@ -36,7 +36,21 @@
     user-select: none;
     position: absolute;
     box-shadow: 0px 0px 25px red;
-    animation: moveEnemy 5s ease infinite;
+    animation: moveEnemyX 5s ease infinite, moveEnemyY 8s ease infinite;
+}
+
+@keyframes moveEnemyX {
+    0% {left: 10%}
+    50% {left: 90%}
+    100% {left: 10%}
+}
+
+@keyframes moveEnemyY {
+    0% {top: 10%}
+    25% {top: 20%}
+    50% {top: 10%}
+    75% {top: 30%}
+    100% {top: 10%}
 }
 
 .enemyVis {
@@ -81,12 +95,6 @@
     box-shadow: 0px 0px 50px rgb(255, 0, 0), 0px 0px 25px rgb(255, 0, 0);
     transform: translate(-50%, -50%);
     z-index: 2;
-}
-
-@keyframes moveEnemy {
-    0% {left: 10%}
-    50% {left: 90%}
-    100% {left: 10%}
 }
 
 .score {
