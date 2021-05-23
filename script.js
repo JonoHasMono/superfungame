@@ -1,3 +1,7 @@
+let soundHolder = document.createElement("audio");
+soundHolder.setAttribute("id", "audio");
+document.body.appendChild(soundHolder);
+
 let x = 50;
 let i = 0;
 let j = 0;
@@ -227,6 +231,7 @@ function createEnemy() {
     enemy.setAttribute("id", "enemy");
     enemy.classList.add("enemy");
     enemy.style.left = enemyX + "px";
+    enemy.setAttribute("draggable", "false");
     let enemyStart = 0;
     enemy.style.top = 10 + "%"
 
@@ -280,6 +285,7 @@ function trackPosition() {
 }
 
 function laserEyes() {
+    
     if(shopOpen == false) {
         if(u3Active == true) {
             let laserWide = document.createElement("a");
@@ -296,7 +302,7 @@ function laserEyes() {
             function laserWideMove() {
                 let l = 0
                 setTimeout(() => {
-                    if(y < 18) {
+                    if(y < enemyCurrentPos3) {
                         if (laserWidePos1 >= enemyCurrentPos1) {
                             if (laserWidePos2 <= enemyCurrentPos2) {
                                 laserHolder.removeChild(laserWide);
@@ -320,7 +326,6 @@ function laserEyes() {
             }, 500);
         }
         if(u1Active == true) {
-
             let laser = document.createElement("a");
             laser.setAttribute("id", "laser");
             laser.classList.add("laser");
@@ -493,15 +498,14 @@ function successfulHit() {
 function successfulHitWide() {
     points = points + shot2;
     function showDamage() {
-        damageY = enemy;
+        damageY = (enemy.getBoundingClientRect().top);
         let damage = document.createElement("div");
         damage.setAttribute("id", "damage");
         damage.setAttribute("class", "damage");
-        damage.style.top = damageY + "%";
         damage.style.opacity = 1;
         damage.innerHTML = "-" + shot2;
         damage.style.left = ((enemyCurrentPos1 + 50) + (Math.floor(Math.random() * 100))) + "px";
-        damage.style.top = (damageY + (Math.floor(Math.random() * 7))) + "%"
+        damage.style.top = (damageY + (Math.floor(Math.random() * 100))) + "px"
         gameVar.appendChild(damage);
         function damageFade() {
             setTimeout(() => {
