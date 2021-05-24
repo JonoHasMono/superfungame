@@ -24,10 +24,9 @@ let shot1 = 1;
 let shot2 = 3;
 
 let u1Cost = 25;
-
 let u2Cost = 35;
-
 let u3Cost = 80;
+let u4Cost = 100;
 
 let powerup1 = "Double Shot";
 let powerup2 = "Rapidfire";
@@ -125,6 +124,27 @@ let upgradeTwo = document.createElement("div");
         }
     }
 
+let upgradeFour = document.createElement("div");
+    upgradeFour.setAttribute("id", "upFour");
+    upgradeFour.setAttribute("class", "upFour");
+    upgradeFour.innerHTML = "$"
+    upgradeFour.onclick = function useUpgradeFour() {
+        if(points >= u4Cost) {
+            points = points - u4Cost;
+            u4Cost = 50 + (Math.floor(u4Cost * 3));
+            u4Price.innerHTML = commas(u4Cost);
+            document.getElementById("score").innerHTML = "Score: " + commas(points);
+            commas(score);
+            u4Active = true;
+            u4Count = u4Count + 1;
+            u4Activate();
+            if(u4Count == 5) {
+                u4Cost = Infinity;
+                document.getElementById("u4Price").innerHTML = "MAX"
+            }
+        }
+    }
+
 
 let u1Count = 0;
 let u1Chance = 0;
@@ -138,6 +158,9 @@ let u3Count = 0;
 let u3Chance = 0;
 let u3Active = false
 
+let u4Count = 0;
+let u4Active = false
+let u4Bonus = 1;
 
 let u1Price = document.createElement("div");
 u1Price.setAttribute("id", "u1Price");
@@ -149,11 +172,16 @@ u2Price.setAttribute("id", "u2Price");
 u2Price.setAttribute("class", "u2Price");
 u2Price.innerHTML = u2Cost;
 
-
 let u3Price = document.createElement("div");
 u3Price.setAttribute("id", "u3Price");
 u3Price.setAttribute("class", "u3Price");
 u3Price.innerHTML = u3Cost;
+
+let u4Price = document.createElement("div");
+u4Price.setAttribute("id", "u4Price");
+u4Price.setAttribute("class", "u4Price");
+u4Price.innerHTML = u4Cost;
+
 
 let u1Desc = document.createElement("div");
 u1Desc.setAttribute("id", "u1Desc");
@@ -166,6 +194,10 @@ u2Desc.setAttribute("class", "u2Desc");
 let u3Desc = document.createElement("div");
 u3Desc.setAttribute("id", "u3Desc");
 u3Desc.setAttribute("class", "u3Desc");
+
+let u4Desc = document.createElement("div");
+u4Desc.setAttribute("id", "u4Desc");
+u4Desc.setAttribute("class", "u4Desc");
 
 
 function startGame() {
@@ -201,7 +233,7 @@ function starLoop() {
     }
     gameVar.appendChild(star);
     starLoop();
-    }, 25)
+    }, 50)
 }
 
 
@@ -465,7 +497,7 @@ function laserEyes() {
 
 
 function successfulHit() {
-    points = points + shot1;
+    points = points + (shot1 * u4Bonus);
     function showDamage() {
         let damageY = (enemy.getBoundingClientRect().top) + (Math.floor(Math.random() * 100));
         let damage = document.createElement("div");
@@ -498,7 +530,7 @@ function successfulHit() {
 }
 
 function successfulHitWide() {
-    points = points + shot2;
+    points = points + (shot2 * u4Bonus);
     function showDamage() {
         let damageY = (enemy.getBoundingClientRect().top) + (Math.floor(Math.random() * 100));
         let damage = document.createElement("div");
@@ -583,6 +615,7 @@ function shopButton() {
         u1Desc.innerHTML = "Double Shot"
         u2Desc.innerHTML = "Rapidfire"
         u3Desc.innerHTML = "Wide Shot"
+        u4Desc.innerHTML = "Increase money with each powerup";
         gameVar.appendChild(shopMenuBG);
         gameVar.appendChild(closeShop);
         showUpgrades();
@@ -603,6 +636,9 @@ function showUpgrades() {
     gameVar.appendChild(upgradeThree);
     gameVar.appendChild(u3Price);
     gameVar.appendChild(u3Desc);
+    gameVar.appendChild(upgradeFour);
+    gameVar.appendChild(u4Price);
+    gameVar.appendChild(u4Desc);
 }
 
 function hideUpgrades() {
@@ -615,6 +651,9 @@ function hideUpgrades() {
     gameVar.removeChild(upgradeThree);
     gameVar.removeChild(u3Price);
     gameVar.removeChild(u3Desc);
+    gameVar.removeChild(upgradeFour);
+    gameVar.removeChild(u4Price);
+    gameVar.removeChild(u4Desc);
 }
 
 function u1Activate() {
@@ -623,6 +662,7 @@ function u1Activate() {
             let p = 0
             if (Math.random() <= u1Chance) {
                 u1Ability();
+                u4Ability();
             } else {
                 u1Activate()
             }
@@ -637,6 +677,7 @@ function u2Activate() {
             let p = 0
             if (Math.random() <= u2Chance) {
                 u2Ability();
+                u4Ability();
             } else {
                 u2Activate()
             }
@@ -651,6 +692,7 @@ function u3Activate() {
             let p = 0
             if (Math.random() <= u3Chance) {
                 u3Ability();
+                u4Ability();
             } else {
                 u3Activate()
             }
@@ -684,6 +726,15 @@ function u3Ability() {
         u3Active = false
         u3Activate()
     }, 5000)
+}
+
+function u4Ability() {
+    if(u4Active == true) {
+        u4Bonus = u4Count + 1;
+        setTimeout(() => {
+            u4Bonus = 1;
+        }, 5000)
+    }
 }
 
 function powerupUsed(pow) {

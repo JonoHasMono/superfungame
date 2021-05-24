@@ -7,9 +7,9 @@ body {
     margin: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
-	background: linear-gradient(90deg, #180000, #001816, #000721, #1a000f);
+	background: linear-gradient(90deg, #250000, #002522, #000f44, #31001d);
 	background-size: 400% 400%;
-	animation: gradient 1s ease infinite;
+	animation: gradient 2s ease infinite;
     overflow: hidden;
 }
 
@@ -389,6 +389,61 @@ body {
     top: 52%;
     left: 17%;
     font-size: 25px;
+    color: white;
+    user-select: none;
+    font-weight: 600;
+    -webkit-text-stroke: 1px black;
+    z-index: 6;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans';
+}
+
+.upFour {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    padding: 5px 20px 8px 20px;
+    top: 20%;
+    left: 75%;
+    font-size: 60px;
+    color: white;
+    user-select: none;
+    font-weight: 600;
+    -webkit-text-stroke: 2px rgb(255, 255, 150);
+    background-color: black;
+    border: 4px solid rgb(0, 255, 150);
+    z-index: 6;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans';
+}
+
+.upFour:hover {
+    cursor: pointer;
+    font-size: 80px;
+    padding: 5px 25px 7px 25px;
+}
+
+.u4Price {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    padding: 0px;
+    top: 20%;
+    left: 83%;
+    font-size: 45px;
+    color: white;
+    user-select: none;
+    font-weight: 300;
+    -webkit-text-stroke: 2px rgb(0, 255, 150);
+    z-index: 6;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans';
+}
+
+
+.u4Desc {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    text-align: center;
+    top: 11%;
+    left: 77%;
+    font-size: 25px;
+    width: 15%;
     color: white;
     user-select: none;
     font-weight: 600;
