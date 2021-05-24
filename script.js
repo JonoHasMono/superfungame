@@ -22,7 +22,8 @@ let points = 0;
 
 let shot1 = 1;
 let shot2 = 3;
-let shot3 = 2
+let shot3 = 2;
+let rBCharge = 0;
 
 let u1Cost = 25;
 let u2Cost = 35;
@@ -349,6 +350,48 @@ function trackPosition() {
 function laserEyes() {
     
     if(shopOpen == false) {
+        if(u5Active == true) {
+            rBCharge = rBCharge + 1;
+            if (rBCharge >= 3) {
+                rBCharge = 0;
+                let laserRB = document.createElement("a");
+            laserRB.setAttribute("id", "laserRB");
+            laserRB.classList.add("laserRB");
+            positionY = 75;
+            laserRB.style.left = laserPosition + "px";
+            laserRB.style.top = positionY + "%";
+            laserHolder.appendChild(laserRB);
+            let laserRBPos1 = laserRB.getBoundingClientRect().left;
+            let laserRBPos2 = laserRB.getBoundingClientRect().right;
+            laserRBMove();
+            let y = 800
+            function laserRBMove() {
+                let l = 0
+                setTimeout(() => {
+                    if(y < enemyCurrentPos3) {
+                        if (laserRBPos1 >= enemyCurrentPos1) {
+                            if (laserRBPos2 <= enemyCurrentPos2) {
+                                laserHolder.removeChild(laserRB);
+                                successfulHitRB();
+                                y = 75
+                            }
+                        }
+                    } 
+                    y = y - 25;
+                            laserRB.style.top = y + "px"
+                            l++
+                            if (l < 50) {
+                                laserRBMove();
+                        }
+                }, 10);
+            }
+            setTimeout(() => {
+                laserRB.classList.remove("laserRB");
+                laserHolder.removeChild(laserRB);
+                y = 75
+            }, 500);
+            }
+        }
         if(u3Active == true) {
             let laserWide = document.createElement("a");
             laserWide.setAttribute("id", "laserWide");
@@ -584,6 +627,39 @@ function successfulHitWide() {
         setTimeout(() => {
             damageFade();
         }, 250)
+        setTimeout(() => {
+            gameVar.removeChild(damage);
+        }, 1000)
+    }
+    showDamage();
+    document.getElementById("score").innerHTML = "Score: " + commas(points);
+}
+
+function successfulHitRB() {
+    points = points + (shot3 * u4Bonus);
+    function showDamage() {
+        let damageY = (enemy.getBoundingClientRect().top) + (Math.floor(Math.random() * 100));
+        let damage = document.createElement("div");
+        damage.setAttribute("id", "damage");
+        damage.setAttribute("class", "damage");
+        damage.style.opacity = 1;
+        damage.innerHTML = "-" + shot3;
+        damage.style.left = ((enemyCurrentPos1 + 50) + (Math.floor(Math.random() * 100))) + "px";
+        damage.style.top = damageY + "px"
+        gameVar.appendChild(damage);
+        function damageFade() {
+            setTimeout(() => {
+                if(damage.style.opacity > 0) {
+                    damage.style.opacity = damage.style.opacity - 0.01
+                    damageY = damageY - 2
+                    damage.style.top = damageY + "px"
+                    damageFade();
+                }
+            }, 10)
+        }
+        setTimeout(() => {
+            damageFade();
+        }, 50)
         setTimeout(() => {
             gameVar.removeChild(damage);
         }, 1000)
