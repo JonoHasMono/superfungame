@@ -200,14 +200,6 @@ u4Desc.setAttribute("id", "u4Desc");
 u4Desc.setAttribute("class", "u4Desc");
 
 
-function startGame() {
-    createCharacter();
-    createEnemy();
-    setScore();
-    shopButton();
-    starLoop();
-}
-
 function starLoop() {
     let star = document.createElement("a");
     let starY = -10
@@ -763,6 +755,14 @@ function powerupUsed(pow) {
         }, 1000)
     }
     showPowerup();
+}
+
+function startGame() {
+    createCharacter();
+    createEnemy();
+    setScore();
+    shopButton();
+    starLoop();
 }
 
 startGame();

@@ -9,7 +9,7 @@ body {
     background-attachment: fixed;
 	background: linear-gradient(90deg, #250000, #002522, #000f44, #31001d);
 	background-size: 400% 400%;
-	animation: gradient 2s ease infinite;
+	animation: gradient 4s ease infinite;
     overflow: hidden;
 }
 
