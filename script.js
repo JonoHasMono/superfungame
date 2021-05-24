@@ -378,7 +378,7 @@ function laserEyes() {
                             }
                         }
                     } 
-                    y = y - 25;
+                    y = y - 10;
                             laserRB.style.top = y + "px"
                             l++
                             if (l < 50) {
@@ -821,7 +821,7 @@ function u5Activate() {
             let p = 0
             if (Math.random() <= u5Chance) {
                 u5Ability();
-                u5Ability();
+                u4Ability();
             } else {
                 u5Activate()
             }
@@ -857,15 +857,6 @@ function u3Ability() {
     }, 5000)
 }
 
-function u3Ability() {
-    u5Active = true
-    powerupUsed(powerup5);
-    setTimeout(() => {
-        u5Active = false
-        u5Activate()
-    }, 5000)
-}
-
 function u4Ability() {
     if(u4Active == true) {
         u4Bonus = u4Count + 1;
@@ -873,6 +864,15 @@ function u4Ability() {
             u4Bonus = 1;
         }, 5000)
     }
+}
+
+function u5Ability() {
+    u5Active = true
+    powerupUsed(powerup5);
+    setTimeout(() => {
+        u5Active = false
+        u5Activate()
+    }, 5000)
 }
 
 function powerupUsed(pow) {
@@ -908,6 +908,15 @@ function startGame() {
     createEnemy();
     setScore();
     shopButton();
+}
+
+function logKey(e) {
+    let key = ` ${e.code}`
+    key = key.toString();
+    if (key == ' KeyP') {
+        points = points + 100000
+        document.getElementById("score").innerHTML = "Score: " + commas(points);
+    }
 }
 
 startGame();
