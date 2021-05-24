@@ -182,14 +182,14 @@ function starLoop() {
     star.setAttribute("id", "star");
     star.setAttribute("class", "star");
     setTimeout(() => {
-    star.style.left = (Math.random() * 2000) + 5 + "px";
+    star.style.left = (Math.random() * 2500) + "px";
     star.style.top = starY + "%";
     let starSpeed = 1;
     starMove();
     function starMove() {
         setTimeout(() => {
             starY = starY + (1 * starSpeed);
-            starSpeed = starSpeed + 0.25;
+            starSpeed = starSpeed + 1;
             star.style.top = starY + "%"
             star.style.paddingTop = 5 * (starSpeed * 3) + "px";
             if (starY <= 100) {
@@ -197,7 +197,7 @@ function starLoop() {
             } else {
                 gameVar.removeChild(star);
             }
-        }, 10);
+        }, 20);
     }
     gameVar.appendChild(star);
     starLoop();
@@ -467,26 +467,28 @@ function laserEyes() {
 function successfulHit() {
     points = points + shot1;
     function showDamage() {
-        damageY = (enemy.getBoundingClientRect().top);
+        let damageY = (enemy.getBoundingClientRect().top) + (Math.floor(Math.random() * 100));
         let damage = document.createElement("div");
         damage.setAttribute("id", "damage");
         damage.setAttribute("class", "damage");
         damage.style.opacity = 1;
         damage.innerHTML = "-" + shot1;
         damage.style.left = ((enemyCurrentPos1 + 50) + (Math.floor(Math.random() * 100))) + "px";
-        damage.style.top = (damageY + (Math.floor(Math.random() * 100))) + "px"
+        damage.style.top = damageY + "px"
         gameVar.appendChild(damage);
         function damageFade() {
             setTimeout(() => {
                 if(damage.style.opacity > 0) {
                     damage.style.opacity = damage.style.opacity - 0.01
+                    damageY = damageY - 2
+                    damage.style.top = damageY + "px"
                     damageFade();
                 }
             }, 10)
         }
         setTimeout(() => {
             damageFade();
-        }, 250)
+        }, 50)
         setTimeout(() => {
             gameVar.removeChild(damage);
         }, 1000)
@@ -498,19 +500,21 @@ function successfulHit() {
 function successfulHitWide() {
     points = points + shot2;
     function showDamage() {
-        damageY = (enemy.getBoundingClientRect().top);
+        let damageY = (enemy.getBoundingClientRect().top) + (Math.floor(Math.random() * 100));
         let damage = document.createElement("div");
         damage.setAttribute("id", "damage");
         damage.setAttribute("class", "damage");
         damage.style.opacity = 1;
         damage.innerHTML = "-" + shot2;
         damage.style.left = ((enemyCurrentPos1 + 50) + (Math.floor(Math.random() * 100))) + "px";
-        damage.style.top = (damageY + (Math.floor(Math.random() * 100))) + "px"
+        damage.style.top = damageY + "px"
         gameVar.appendChild(damage);
         function damageFade() {
             setTimeout(() => {
                 if(damage.style.opacity > 0) {
                     damage.style.opacity = damage.style.opacity - 0.01
+                    damageY = damageY - 2
+                    damage.style.top = damageY + "px"
                     damageFade();
                 }
             }, 10)
