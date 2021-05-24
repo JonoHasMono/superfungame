@@ -149,6 +149,27 @@ let upgradeFour = document.createElement("div");
         }
     }
 
+let upgradeFive = document.createElement("div");
+    upgradeFive.setAttribute("id", "upFive");
+    upgradeFive.setAttribute("class", "upFive");
+    upgradeFive.innerHTML = "O.o"
+    upgradeFive.onclick = function useUpgradeFive() {
+        if(points >= u5Cost) {
+            points = points - u5Cost;
+            u5Cost = 250 + (Math.floor(u5Cost * 3));
+            u5Price.innerHTML = commas(u5Cost);
+            document.getElementById("score").innerHTML = "Score: " + commas(points);
+            commas(score);
+            u5Count = u3Count + 1;
+            u5Chance = 0.05 * u5Count;
+            u5Activate();
+            if(u5Count == 10) {
+                u5Cost = Infinity;
+                document.getElementById("u5Price").innerHTML = "MAX"
+            }
+        }
+    }
+
 
 let u1Count = 0;
 let u1Chance = 0;
@@ -165,6 +186,10 @@ let u3Active = false
 let u4Count = 0;
 let u4Active = false
 let u4Bonus = 1;
+
+let u5Count = 0;
+let u5Chance = 0;
+let u5Active = false
 
 let u1Price = document.createElement("div");
 u1Price.setAttribute("id", "u1Price");
@@ -186,6 +211,11 @@ u4Price.setAttribute("id", "u4Price");
 u4Price.setAttribute("class", "u4Price");
 u4Price.innerHTML = u4Cost;
 
+let u5Price = document.createElement("div");
+u5Price.setAttribute("id", "u5Price");
+u5Price.setAttribute("class", "u5Price");
+u5Price.innerHTML = u5Cost;
+
 
 let u1Desc = document.createElement("div");
 u1Desc.setAttribute("id", "u1Desc");
@@ -202,6 +232,10 @@ u3Desc.setAttribute("class", "u3Desc");
 let u4Desc = document.createElement("div");
 u4Desc.setAttribute("id", "u4Desc");
 u4Desc.setAttribute("class", "u4Desc");
+
+let u5Desc = document.createElement("div");
+u5Desc.setAttribute("id", "u5Desc");
+u5Desc.setAttribute("class", "u5Desc");
 
 
 function starLoop() {
@@ -612,6 +646,7 @@ function shopButton() {
         u2Desc.innerHTML = "Rapidfire"
         u3Desc.innerHTML = "Wide Shot"
         u4Desc.innerHTML = "Increase money with each powerup";
+        u5Desc.innerHTML = "Rainbeam";
         gameVar.appendChild(shopMenuBG);
         gameVar.appendChild(closeShop);
         showUpgrades();
@@ -635,6 +670,9 @@ function showUpgrades() {
     gameVar.appendChild(upgradeFour);
     gameVar.appendChild(u4Price);
     gameVar.appendChild(u4Desc);
+    gameVar.appendChild(upgradeFive);
+    gameVar.appendChild(u5Price);
+    gameVar.appendChild(u5Desc);
 }
 
 function hideUpgrades() {
@@ -650,6 +688,9 @@ function hideUpgrades() {
     gameVar.removeChild(upgradeFour);
     gameVar.removeChild(u4Price);
     gameVar.removeChild(u4Desc);
+    gameVar.removeChild(upgradeFive);
+    gameVar.removeChild(u5Price);
+    gameVar.removeChild(u5Desc);
 }
 
 function u1Activate() {
@@ -697,6 +738,21 @@ function u3Activate() {
     }, 1000)
 }
 
+function u5Activate() {
+    setTimeout(() => {
+        if (u5Count >= 1) {
+            let p = 0
+            if (Math.random() <= u5Chance) {
+                u5Ability();
+                u5Ability();
+            } else {
+                u5Activate()
+            }
+        
+        }
+    }, 1000)
+}
+
 function u1Ability() {
     u1Active = true
     powerupUsed(powerup1);
@@ -721,6 +777,15 @@ function u3Ability() {
     setTimeout(() => {
         u3Active = false
         u3Activate()
+    }, 5000)
+}
+
+function u3Ability() {
+    u5Active = true
+    powerupUsed(powerup5);
+    setTimeout(() => {
+        u5Active = false
+        u5Activate()
     }, 5000)
 }
 
