@@ -909,7 +909,7 @@ function startGame() {
     setScore();
     shopButton();
 }
-document.addEventListener("keyup", logKey())
+document.addEventListener("keyup", logKey)
 
 function logKey(e) {
     let key = ` ${e.code}`
