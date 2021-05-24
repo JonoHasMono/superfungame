@@ -301,6 +301,7 @@ function createEnemy() {
     let enemyVis = document.createElement("img");
     enemyVis.setAttribute("src", "images/enemy.jpg");
     enemyVis.classList.add("enemyVis");
+    enemyVis.setAttribute("draggable", "false");
 
     enemies.appendChild(enemy);
     enemy.appendChild(enemyVis);
