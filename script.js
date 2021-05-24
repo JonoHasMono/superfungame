@@ -22,15 +22,19 @@ let points = 0;
 
 let shot1 = 1;
 let shot2 = 3;
+let shot3 = 2
 
 let u1Cost = 25;
 let u2Cost = 35;
 let u3Cost = 80;
 let u4Cost = 100;
+let u5Cost = 250;
 
 let powerup1 = "Double Shot";
 let powerup2 = "Rapidfire";
 let powerup3 = "Wide Shot";
+let powerup4 = "Money Bonus"; //Non-displayable
+let powerup5 = "Rainbeam";
 
 
 const gameVar = document.createElement("div");
@@ -762,7 +766,6 @@ function startGame() {
     createEnemy();
     setScore();
     shopButton();
-    starLoop();
 }
 
 startGame();
