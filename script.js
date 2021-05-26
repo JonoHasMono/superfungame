@@ -1,3 +1,5 @@
+function startGame() {
+
 let soundHolder = document.createElement("audio");
 soundHolder.setAttribute("id", "audio");
 document.body.appendChild(soundHolder);
@@ -923,12 +925,6 @@ function powerupUsed(pow) {
     showPowerup();
 }
 
-function startGame() {
-    createCharacter();
-    createEnemy();
-    setScore();
-    shopButton();
-}
 document.addEventListener("keyup", logKey)
 
 function logKey(e) {
@@ -940,6 +936,12 @@ function logKey(e) {
     } else if (key == ' KeyM') {
         muteMusic();
     }
+}
+
+createCharacter();
+createEnemy();
+setScore();
+shopButton();
 }
 
 startGame();
