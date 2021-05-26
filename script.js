@@ -2,6 +2,33 @@ let soundHolder = document.createElement("audio");
 soundHolder.setAttribute("id", "audio");
 document.body.appendChild(soundHolder);
 
+let musicMuted = true;
+
+
+myAudio = new Audio('audio/theme1.mp3'); 
+if (typeof myAudio.loop == 'boolean')
+{
+    myAudio.loop = true;
+}
+else
+{
+    myAudio.addEventListener('ended', function() {
+        this.currentTime = 0;
+        this.play();
+    }, false);
+}
+
+function muteMusic() {
+    myAudio.play();
+    if (musicMuted == false) {
+        musicMuted = true;
+        myAudio.volume = 0;
+    } else if (musicMuted == true) {
+        musicMuted = false;
+        myAudio.volume = 1;
+    }
+}
+
 let x = 50;
 let i = 0;
 let j = 0;
@@ -22,7 +49,7 @@ let points = 0;
 
 let shot1 = 1;
 let shot2 = 3;
-let shot3 = 2;
+let shot3 = 20;
 let rBCharge = 0;
 
 let u1Cost = 25;
@@ -161,7 +188,7 @@ let upgradeFive = document.createElement("div");
             u5Price.innerHTML = commas(u5Cost);
             document.getElementById("score").innerHTML = "Score: " + commas(points);
             commas(score);
-            u5Count = u3Count + 1;
+            u5Count = u5Count + 1;
             u5Chance = 0.05 * u5Count;
             u5Activate();
             if(u5Count == 10) {
@@ -353,44 +380,37 @@ function laserEyes() {
     if(shopOpen == false) {
         if(u5Active == true) {
             rBCharge = rBCharge + 1;
-            if (rBCharge >= 3) {
+            if (rBCharge >= 2) {
                 rBCharge = 0;
                 let laserRB = document.createElement("a");
             laserRB.setAttribute("id", "laserRB");
             laserRB.classList.add("laserRB");
-            positionY = 75;
+            positionY = 25;
             laserRB.style.left = laserPosition + "px";
             laserRB.style.top = positionY + "%";
             laserHolder.appendChild(laserRB);
             let laserRBPos1 = laserRB.getBoundingClientRect().left;
             let laserRBPos2 = laserRB.getBoundingClientRect().right;
             laserRBMove();
-            let y = 800
+            let y = 50
             function laserRBMove() {
                 let l = 0
                 setTimeout(() => {
-                    if(y < enemyCurrentPos3) {
                         if (laserRBPos1 >= enemyCurrentPos1) {
                             if (laserRBPos2 <= enemyCurrentPos2) {
-                                laserHolder.removeChild(laserRB);
-                                successfulHitRB();
-                                y = 75
+                                    setTimeout(() => {
+                                        successfulHitRB();
+                                        laserHolder.removeChild(laserRB);
+                                    },100)
+                                
                             }
-                        }
-                    } 
-                    y = y - 10;
-                            laserRB.style.top = y + "px"
-                            l++
-                            if (l < 50) {
-                                laserRBMove();
                         }
                 }, 10);
             }
             setTimeout(() => {
                 laserRB.classList.remove("laserRB");
                 laserHolder.removeChild(laserRB);
-                y = 75
-            }, 500);
+            }, 150);
             }
         }
         if(u3Active == true) {
@@ -859,9 +879,9 @@ function u3Ability() {
 
 function u4Ability() {
     if(u4Active == true) {
-        u4Bonus = u4Count + 1;
+        u4Bonus = u4Bonus + (u4Count + 1);
         setTimeout(() => {
-            u4Bonus = 1;
+            u4Bonus = u4Bonus - (u4Count + 1);
         }, 5000)
     }
 }
@@ -917,6 +937,8 @@ function logKey(e) {
     if (key == ' KeyP') {
         points = points + 100000
         document.getElementById("score").innerHTML = "Score: " + commas(points);
+    } else if (key == ' KeyM') {
+        muteMusic();
     }
 }
 
