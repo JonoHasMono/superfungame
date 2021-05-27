@@ -7,7 +7,7 @@ document.body.appendChild(soundHolder);
 let musicMuted = true;
 
 
-myAudio = new Audio('audio/theme1.mp3'); 
+myAudio = new Audio('audio/theme2.mp3'); 
 if (typeof myAudio.loop == 'boolean')
 {
     myAudio.loop = true;
@@ -46,6 +46,7 @@ let shopOpen = false;
 let mouseIsDown = false;
 let firerate = 150;
 let enemyX = 0;
+let enemyHP = 5;
 
 let points = 0;
 
@@ -439,7 +440,7 @@ function laserEyes() {
                             }
                         }
                     } 
-                    y = y - 30;
+                    y = y - 45;
                             laserWide.style.top = y + "px"
                             l++
                             if (l < 50) {
@@ -451,7 +452,7 @@ function laserEyes() {
                 laserWide.classList.remove("laserWide");
                 laserHolder.removeChild(laserWide);
                 y = 75
-            }, 500);
+            }, 400);
         }
         if(u1Active == true) {
             let laser = document.createElement("a");
@@ -476,14 +477,14 @@ function laserEyes() {
                             y = 75
                         }
                     }
-                    y = y - 40;
+                    y = y - 60;
                         laser.style.top = y + "px"
                         l++
                         if (l < 50) {
                             laserMove();
                     }
                 } else { 
-                    y = y - 40;
+                    y = y - 60;
                         laser.style.top = y + "px"
                         l++
                         if (l < 50) {
@@ -497,7 +498,7 @@ function laserEyes() {
                 laser.classList.remove("laser");
                 laserHolder.removeChild(laser);
                 y = 75
-            }, 500);
+            }, 350);
 
             let laser2 = document.createElement("a");
             laser2.setAttribute("id", "laser");
@@ -522,14 +523,14 @@ function laserEyes() {
                                 y2 = 75
                             }
                         }
-                        y2 = y2 - 40;
+                        y2 = y2 - 60;
                             laser2.style.top = y2 + "px"
                             l2++
                             if (l2 < 50) {
                                 laserMove2();
                         }
                     } else { 
-                        y2 = y2 - 40;
+                        y2 = y2 - 60;
                             laser2.style.top = y2 + "px"
                             l2++
                             if (l2 < 50) {
@@ -542,7 +543,7 @@ function laserEyes() {
             laser2.classList.remove("laser");
             laserHolder.removeChild(laser2);
             y2 = 75
-        }, 500);
+        }, 350);
 } else {
         let laser = document.createElement("a");
         laser.setAttribute("id", "laser");
@@ -565,14 +566,14 @@ function laserEyes() {
                             successfulHit();
                         }
                     }
-                    y = y - 40;
+                    y = y - 60;
                         laser.style.top = y + "px"
                         l++
                         if (l < 50) {
                             laserMove();
                     }
                 } else { 
-                    y = y - 40;
+                    y = y - 60;
                         laser.style.top = y + "px"
                         l++
                         if (l < 50) {
@@ -586,7 +587,7 @@ function laserEyes() {
             laser.classList.remove("laser");
             laserHolder.removeChild(laser);
             y = 75
-        }, 500);
+        }, 350);
     }
 }
     }
@@ -931,7 +932,7 @@ function logKey(e) {
     let key = ` ${e.code}`
     key = key.toString();
     if (key == ' KeyP') {
-        points = points + 100000
+        points = points + 10000000
         document.getElementById("score").innerHTML = "Score: " + commas(points);
     } else if (key == ' KeyM') {
         muteMusic();
